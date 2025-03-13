@@ -3,6 +3,8 @@
 #include "Fraction.h"
 #include <iostream>
 #include <ctime>
+#include <string>
+#include <algorithm> 
 
 using namespace std;
 
@@ -41,10 +43,9 @@ bool Fraction::isVaild(int _num, int _den) {
 }
 
 void Fraction::simplify() {
-    if (this->den % this->num == 0 && this->num != 0) {
-        this->den /= this->num; 
-        this->num /= this->num; 
-    }
+    int GCD = __gcd(this->num, this->den);
+    this->num /= GCD;
+    this->den /= GCD;
 }
 
 float Fraction::equal() const {
@@ -52,12 +53,22 @@ float Fraction::equal() const {
 }
 
 std::ostream &operator<<(std::ostream &os, const Fraction _Frac) {
+    if (_Frac.den == 1) {
+        os << _Frac.num;
+        return os;
+    }
     os << _Frac.num << '/' << _Frac.den;
     return os;
 }
 
 istream &operator>>(istream &is, Fraction &_Frac) {
-    is >> _Frac.num >> _Frac.den;
+    string c;
+    is >> _Frac.num >> c;
+    // cout << c << endl;
+    if (c[0] == '/') {
+        _Frac.den = stoi(c.substr(1, c.length()-1));
+    }
+    else _Frac.den = stoi(c);
     return is;
 }
 
@@ -87,6 +98,7 @@ Fraction operator-(Fraction left, Fraction right) {
     Fraction temp(0, 1);
     temp.num = (left.num * right.den) - (right.num * left.den);
     temp.den = left.den * right.den;
+    temp.simplify();
     return temp;
 }
 
@@ -94,6 +106,7 @@ Fraction operator+(Fraction left, Fraction right) {
     Fraction temp(0, 1);
     temp.num = (left.num * right.den) + (right.num * left.den);
     temp.den = left.den * right.den;
+    temp.simplify();
     return temp;
 }
 
@@ -113,6 +126,7 @@ Fraction operator/(Fraction left, Fraction right) {
         temp.den *= -1;
         temp.num *= -1;
     }
+    temp.simplify();
     return temp;
 }
 

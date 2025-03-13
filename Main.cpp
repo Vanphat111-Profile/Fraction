@@ -1,7 +1,4 @@
 #include <iostream>
-#include <string>
-#include <fstream>
-#include <vector>
 #include "Fraction.h"
 
 
@@ -9,29 +6,14 @@ using namespace std;
 
 int main()
 {
-    vector <Fraction> lstFrac;
-    string filename;
-    int n, max = 0, min = 0;
-    cin >> filename;
-    ifstream file;
+    cout << endl << "Hồ Văn Phát || 064206001095" << endl << endl;
+    Fraction f1, f2;
 
-    file.open(filename);
-    file >> n;
-    for (int i = 0; i < n; i++) {
-        Fraction* ptr = new Fraction(0, 1);
-        file >> *ptr;
-        lstFrac.push_back(*ptr);
-    }
-    
-    for (int i = 1; i < lstFrac.size(); i++) {
-        if (lstFrac[i] < lstFrac[min]) min = i;
-        if (lstFrac[i] > lstFrac[max]) max = i;
-    }
+    cout << "Nhap phan so 1: ";
+    cin >> f1;
+    cout << "Nhap phan so 2: ";
+    cin >> f2;
 
-    cout << lstFrac[min] << endl;
-    cout << lstFrac[max] << endl;
-
-    file.close();
-
+    cout << f1 << " + " << f2 << " = " << f1 + f2;
     return 0;
 }
